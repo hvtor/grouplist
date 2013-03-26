@@ -2,38 +2,33 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
 
-  setup do 
-    @user = FactoryGirl.create(:user)
-    assert @user.valid?
-  end
-
   test "user must input a username" do
-    @user.username = nil
-    refute @user.valid?
+    user = FactoryGirl.build(:user, :username => nil )
+    user.save
+    refute user.valid?
   end
 
   test "username does not accept non-alpha-numeric characters" do
-    @user.username = "$yolobro"
-    assert_nil @user.username.match(/^\w+$/)
+    user = FactoryGirl.build(:user, :username => "$yolobro")
+    user.save
+    refute user.valid?
   end
 
-  # test for spaces
-  # test for weird characters
-  #assert_equal "John123", @user.username
+  # test "user must have an email" do
+  #   @user.email = nil
+  #   refute @user.valid?
   # end
 
-  test "user must have an email" do
-    @user.email = nil
-    refute @user.valid?
-  end
+  # test "email is unique" do
+  #   user2 = FactoryGirl.build(:user)
+  #   user2.save
+  #   refute user2.valid?
+  # end
 
-  test "email is unique" do
-
-  end
-
-  test "email has correct syntax" do
-
-  end
+  # test "email has correct syntax" do
+  #   @user.username = "$yolobro"
+  #   assert_nil @user.username.match(/^\w+$/)
+  # end
 
   test "user must have a password" do
 
